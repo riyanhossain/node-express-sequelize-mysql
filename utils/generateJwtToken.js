@@ -3,14 +3,14 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const generateJwtToken = (user) => {
+const generateJwtToken = (user, expiresIn) => {
   return jwt.sign(
     {
       id: user._id,
       email: user.email,
     },
     process.env.JWT_SECRET_KEY,
-    { expiresIn: "7d" },
+    { expiresIn: expiresIn},
     { algorithm: "HS256" }
   );
 };
