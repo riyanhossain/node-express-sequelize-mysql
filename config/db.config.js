@@ -2,7 +2,7 @@ module.exports = {
   HOST: "localhost",
   PASSWORD: "",
   USER: "root",
-  DB: "node-express-sequelize",
+  DB: "simple_ecommerce",
   dialect: "mysql",
   pool: {
     max: 5,

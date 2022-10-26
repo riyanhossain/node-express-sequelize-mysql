@@ -1,12 +1,28 @@
 const db = require("../models/index");
+const { v4: uuidv4 } = require("uuid");
+const { hashIt } = require("../utils/hash");
 const User = db.users;
 
-const addUser = async (req, res) => {
+const register = async (req, res) => {
   try {
-    const user = await User.create(req.body);
+    //checking user exist
+    const checkExist = await User.findOne({
+      where: {
+        email: req.body.email,
+      },
+    });
+    if (checkExist) {
+      return res.status(200).json({
+        message: "user already exists",
+      });
+    }
+    await User.create({
+      ...req.body,
+      password: await hashIt(req.body.password),
+      _id: uuidv4(),
+    });
     res.status(201).json({
       message: "User added",
-      user,
     });
   } catch (err) {
     res.status(500).json({
@@ -14,6 +30,8 @@ const addUser = async (req, res) => {
     });
   }
 };
+
+const login = async (req, res) => {};
 
 const getUsers = async (req, res) => {
   try {
@@ -30,6 +48,6 @@ const getUsers = async (req, res) => {
 };
 
 module.exports = {
-  addUser,
+  register,
   getUsers,
 };
