@@ -20,7 +20,7 @@ const register = async (req, res) => {
     await User.create({
       ...req.body,
       password: await hashIt(req.body.password),
-      _id: uuidv4(),
+      id: uuidv4(),
     });
     res.status(201).json({
       message: "User added",
@@ -57,7 +57,7 @@ const login = async (req, res) => {
       message: "Login sucessfully",
       user: {
         name: user.name,
-        _id: user._id,
+        id: user.id,
         email: user.email,
       },
       accessToken: generateJwtToken(user, "6h"),
