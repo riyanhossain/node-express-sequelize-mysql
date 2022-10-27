@@ -60,8 +60,8 @@ const login = async (req, res) => {
         _id: user._id,
         email: user.email,
       },
-      accessToken: generateJwtToken(user, "2h"),
-      refreshToken: generateJwtToken(user, "1d"),
+      accessToken: generateJwtToken(user, "6h"),
+      refreshToken: generateJwtToken(user, "3d"),
     });
   } catch (err) {
     res.status(500).json({
@@ -70,6 +70,7 @@ const login = async (req, res) => {
   }
 };
 
+//user list except admin
 const getUsers = async (req, res) => {
   try {
     const users = await User.findAll({
